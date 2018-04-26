@@ -22,7 +22,5 @@ public class DetailActivity extends AppCompatActivity {
 
         displayTitle.setText(clicked.getTitle());
         displayContent.setText(clicked.getContent());
-
-
     }
 }

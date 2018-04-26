@@ -20,7 +20,6 @@ public class EntryDatabase extends SQLiteOpenHelper {
            instance = new EntryDatabase(context, dbName, null, dbVersion);
         }
         return instance;
-
     }
 
     // Constructor of EntryDatabase
@@ -30,44 +29,38 @@ public class EntryDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // create DB tables
-        db.execSQL("CREATE TABLE diary (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, mood INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)");
-        // fill with a test entry
-        db.execSQL("INSERT INTO diary (title, content, mood) VALUES ('Test', 'Testing', 2)");
-
-
+        // create new table in database
+        db.execSQL("CREATE TABLE diary (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, mood INTEGER, ts DATETIME DEFAULT CURRENT_TIMESTAMP)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE diary");
         onCreate(db);
-
     }
 
     // Method to select database
     public Cursor selectAll(){
-        // select all the entries in the DB
+        // select all rows in table
         return this.getWritableDatabase().rawQuery("SELECT * FROM diary", null, null);
     }
 
     public void insert(JournalEntry entry) {
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase wdb = getWritableDatabase();
+
+        // A shortcut functionality from SQLiteOpenHelper to insert into database without the use of an SQL statement (QUESTION!)
         ContentValues cv = new ContentValues();
 
-        // put
+        // Insert data (as received by UI and saved in entry) into table
         cv.put("title", entry.getTitle());
         cv.put("content", entry.getContent());
         cv.put("mood", entry.getMood());
-
-        // call insert
-        db.insert("diary",null,cv);
+        wdb.insert("diary",null, cv);
     }
 
     public void delete(int id){
-        SQLiteDatabase db = getWritableDatabase();
-        String Q = "DELETE FROM diary WHERE _id = " + id;
-        db.execSQL(Q);
+        SQLiteDatabase wdb = getWritableDatabase();
+        wdb.execSQL("DELETE FROM diary WHERE _id = " + id);
     }
 
 }

@@ -21,17 +21,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // set listener on floating action button
         FloatingActionButton floatAction = (FloatingActionButton) findViewById(R.id.action);
-        floatAction.setOnClickListener(new GoButtonClickListener());
+        floatAction.setOnClickListener(new ActionButtonClickListener());
 
+        // display rows of database table as items in listview
+        // Get the current database
         db = EntryDatabase.getInstance(getApplicationContext());
-
+        // select all entries (rows)
         Cursor c = db.selectAll();
-
+        // connect list of entries with the listview through adapter
         ListView lv = (ListView) findViewById(R.id.listofentries);
         adapter = new EntryAdapter(this, c);
         lv.setAdapter(adapter);
 
+        // set listeners to items
         lv.setOnItemClickListener(new ListItemClickListener());
         lv.setOnItemLongClickListener(new ListItemLongClickListener());
     }
@@ -42,14 +46,11 @@ public class MainActivity extends AppCompatActivity {
         updateData();
     }
 
-    private class GoButtonClickListener implements View.OnClickListener {
+    private class ActionButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            Log.d("hi", "hi");
-            // code to run when the button gets clicked
             Intent intent = new Intent(MainActivity.this, InputActivity.class);
             startActivity(intent);
-
         }
     }
 
@@ -76,21 +77,18 @@ public class MainActivity extends AppCompatActivity {
     private class ListItemLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("hi", "listitemLONGclicklistener");
-            // connect to db
-            db = EntryDatabase.getInstance(getApplicationContext());
             Cursor c = (Cursor) parent.getItemAtPosition(position);
             int idT = c.getInt(0);
             db.delete(idT);
 
             // update the view
             updateData();
-           return false;
+            return false;
         }
     }
 
     private void updateData() {
-        //db = EntryDatabase.getInstance(getApplicationContext());
+        //db = EntryDatabase.getInstance(getApplicationContext()); (QUESTION!)
         Cursor c = db.selectAll();
         adapter.swapCursor(c);
     }

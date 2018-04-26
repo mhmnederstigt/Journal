@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class InputActivity extends AppCompatActivity {
+    int mood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,51 @@ public class InputActivity extends AppCompatActivity {
 
         Button submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new SubmitClickListener());
+
+        ImageView bad = (ImageView) findViewById(R.id.smileybad);
+        bad.setOnClickListener(new SmileyClickListener());
+        ImageView odd = (ImageView) findViewById(R.id.smileyodd);
+        odd.setOnClickListener(new SmileyClickListener());
+        ImageView neutral = (ImageView) findViewById(R.id.smileyneutral);
+        neutral.setOnClickListener(new SmileyClickListener());
+        ImageView great = (ImageView) findViewById(R.id.smileygreat);
+        great.setOnClickListener(new SmileyClickListener());
+    }
+
+    public class SmileyClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            // if view is bad produce int is 1 etc.
+            Log.d("hi", "hola!");
+            switch (view.getId()) {
+                case R.id.smileybad:
+                    mood = 1;
+                    morph(view);
+                    break;
+                case R.id.smileyodd:
+                    mood = 2;
+                    morph(view);
+                    break;
+                case R.id.smileyneutral:
+                    mood = 3;
+                    morph(view);
+                    break;
+                case R.id.smileygreat:
+                    mood = 4;
+                    morph(view);
+                    break;
+            }
+        }
+    }
+
+    private void morph(View view) {
+        int padding = view.getPaddingTop();
+        if (padding > 0){
+            view.setPadding(0,0,0,0);
+        }
+        else {
+            view.setPadding(8,8,8,8);
+        }
     }
 
     private class SubmitClickListener implements View.OnClickListener {
@@ -26,11 +73,6 @@ public class InputActivity extends AppCompatActivity {
 
             Intent intent = new Intent(InputActivity.this, MainActivity.class);
             startActivity(intent);
-
-
-            Log.d("hi", "add entry");
-            // code to run when the button gets clicked
-
         }
     }
 
@@ -41,15 +83,10 @@ public class InputActivity extends AppCompatActivity {
 
         EditText title = findViewById(R.id.title);
         EditText content = findViewById(R.id.content);
-        EditText mood = findViewById(R.id.mood);
-
+        entry.setMood(mood);
         entry.setTitle(title.getText().toString());
         entry.setContent(content.getText().toString());
-        entry.setMood(5);
         db.insert(entry);
-
-
-
     }
 
 }

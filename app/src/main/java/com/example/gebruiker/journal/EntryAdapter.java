@@ -3,8 +3,11 @@ package com.example.gebruiker.journal;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ResourceCursorAdapter;
+
+import java.sql.Timestamp;
 
 public class EntryAdapter extends ResourceCursorAdapter {
     public EntryAdapter(Context context, Cursor c) {
@@ -15,18 +18,39 @@ public class EntryAdapter extends ResourceCursorAdapter {
     public void bindView(View view, Context context, Cursor c){
         // get the title and timestamp from the DB
         String title = c.getString(c.getColumnIndex("title"));
+        //DateTime ts = c.getInt(5);
         int mood = c.getInt(c.getColumnIndex("mood"));
-        //String timestamp = c.getString(c.getColumnIndex("timestamp"));
 
         // get the views in which it has to be displayed
         TextView displayTitle = view.findViewById(R.id.title);
-        TextView displayMood = view.findViewById(R.id.mood);
+        ImageView displayMood = view.findViewById(R.id.mood);
+        TextView displayMoodtext = view.findViewById(R.id.moodtext);
         TextView displayTimestamp = view.findViewById(R.id.timestamp);
 
         // set info in display
         displayTitle.setText(title);
-        displayMood.setText(Integer.toString(mood));
-        // displayTimestamp.setText(timestamp);
+//        displayTimestamp.setText(timestamp);
 
+
+        // Determine what image to display based on mood info from table
+        String moodImageName;
+        switch (mood) {
+            case 1:
+                displayMood.setImageResource(R.drawable.smileybad);
+                displayMoodtext.setText("bad");
+                break;
+            case 2:
+                displayMood.setImageResource(R.drawable.smileyodd);
+                displayMoodtext.setText("odd");
+                break;
+            case 3:
+                displayMood.setImageResource(R.drawable.smileyneutral);
+                displayMoodtext.setText("neutral");
+                break;
+            case 4:
+                displayMood.setImageResource(R.drawable.smileygreat);
+                displayMoodtext.setText("great");
+                break;
+        }
     }
 }

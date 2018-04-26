@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:fontFamily="@font/sourdough"
+        android:fontFamily="@font/charger"
         android:text="Nice day!"
         android:textColor="@color/colorAccent"
         android:textSize="24sp" />
@@ -20,6 +20,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
         android:orientation="horizontal">
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:fontFamily="@font/charger"
             android:text="2018-03-03 12:52" />
 
         <TextView
@@ -34,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:fontFamily="@font/charger"
             android:text="great" />
 
     </LinearLayout>
@@ -43,6 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:fontFamily="@font/chargerlight"
         android:text="today I went out to eat dinner with friends, it was really amazing, the food was great and we had a blast!"
         android:textColor="@color/colorPrimaryDark" />
 </LinearLayout>
