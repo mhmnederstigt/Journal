@@ -64,9 +64,10 @@ public class MainActivity extends AppCompatActivity {
             // get data from db and put them in a journal entry
             JournalEntry clicked = new JournalEntry();
 
-            clicked.setId(cursor.getInt(0));
-            clicked.setTitle(cursor.getString(1));
-            clicked.setContent(cursor.getString(2));
+            clicked.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            clicked.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+            clicked.setContent(cursor.getString(cursor.getColumnIndex("content")));
+            clicked.setTimestamp(cursor.getString(cursor.getColumnIndex("timestamp")));
 
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             intent.putExtra("clicked", clicked);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             Cursor c = (Cursor) parent.getItemAtPosition(position);
-            int idT = c.getInt(0);
+            int idT = c.getInt(c.getColumnIndex("_id"));
             db.delete(idT);
 
             // update the view

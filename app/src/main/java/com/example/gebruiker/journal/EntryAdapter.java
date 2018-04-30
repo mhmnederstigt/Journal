@@ -2,6 +2,7 @@ package com.example.gebruiker.journal;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,8 +19,9 @@ public class EntryAdapter extends ResourceCursorAdapter {
     public void bindView(View view, Context context, Cursor c){
         // get the title and timestamp from the DB
         String title = c.getString(c.getColumnIndex("title"));
-        //DateTime ts = c.getInt(5);
         int mood = c.getInt(c.getColumnIndex("mood"));
+        String timestamp = c.getString(c.getColumnIndex("timestamp"));
+
 
         // get the views in which it has to be displayed
         TextView displayTitle = view.findViewById(R.id.title);
@@ -29,8 +31,7 @@ public class EntryAdapter extends ResourceCursorAdapter {
 
         // set info in display
         displayTitle.setText(title);
-//        displayTimestamp.setText(timestamp);
-
+        displayTimestamp.setText(timestamp);
 
         // Determine what image to display based on mood info from table
         String moodImageName;

@@ -10,7 +10,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 public class InputActivity extends AppCompatActivity {
+    int PADDING = 16;
     int mood;
+    Boolean setMood;
+    ImageView bad;
+    ImageView odd;
+    ImageView neutral;
+    ImageView great;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,50 +27,68 @@ public class InputActivity extends AppCompatActivity {
         Button submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new SubmitClickListener());
 
-        ImageView bad = (ImageView) findViewById(R.id.smileybad);
+        bad = (ImageView) findViewById(R.id.smileybad);
         bad.setOnClickListener(new SmileyClickListener());
-        ImageView odd = (ImageView) findViewById(R.id.smileyodd);
+        odd = (ImageView) findViewById(R.id.smileyodd);
         odd.setOnClickListener(new SmileyClickListener());
-        ImageView neutral = (ImageView) findViewById(R.id.smileyneutral);
+        neutral = (ImageView) findViewById(R.id.smileyneutral);
         neutral.setOnClickListener(new SmileyClickListener());
-        ImageView great = (ImageView) findViewById(R.id.smileygreat);
+        great = (ImageView) findViewById(R.id.smileygreat);
         great.setOnClickListener(new SmileyClickListener());
+
+        // Set padding of smileys as it was previously
+        if (savedInstanceState != null){
+            int paddingBad = savedInstanceState.getInt("paddingBad");
+            bad.setPadding(paddingBad,paddingBad, paddingBad, paddingBad);
+            int paddingOdd = savedInstanceState.getInt("paddingOdd");
+            odd.setPadding(paddingOdd,paddingOdd, paddingOdd, paddingOdd);
+            int paddingNeutral = savedInstanceState.getInt("paddingNeutral");
+            neutral.setPadding(paddingNeutral,paddingNeutral, paddingNeutral, paddingNeutral);
+            int paddingGreat = savedInstanceState.getInt("paddingGreat");
+            great.setPadding(paddingGreat,paddingGreat, paddingGreat, paddingGreat);
+
+        }
+        else {
+            bad.setPadding(PADDING, PADDING, PADDING, PADDING);
+            odd.setPadding(PADDING, PADDING, PADDING, PADDING);
+            neutral.setPadding(PADDING, PADDING, PADDING, PADDING);
+            great.setPadding(PADDING, PADDING, PADDING, PADDING);
+        }
     }
 
     public class SmileyClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            // if view is bad produce int is 1 etc.
-            Log.d("hi", "hola!");
             switch (view.getId()) {
                 case R.id.smileybad:
-                    mood = 1;
                     morph(view);
+                    mood = 1;
                     break;
                 case R.id.smileyodd:
-                    mood = 2;
                     morph(view);
+                    mood = 2;
                     break;
                 case R.id.smileyneutral:
-                    mood = 3;
                     morph(view);
+                    mood = 3;
                     break;
                 case R.id.smileygreat:
-                    mood = 4;
                     morph(view);
+                    mood = 4;
                     break;
             }
         }
     }
 
     private void morph(View view) {
-        int padding = view.getPaddingTop();
-        if (padding > 0){
-            view.setPadding(0,0,0,0);
-        }
-        else {
-            view.setPadding(8,8,8,8);
-        }
+        // Deflate all smileys, except for the one that is clicked
+        bad.setPadding(PADDING,PADDING,PADDING,PADDING);
+        odd.setPadding(PADDING,PADDING,PADDING,PADDING);
+        neutral.setPadding(PADDING,PADDING,PADDING,PADDING);
+        great.setPadding(PADDING,PADDING,PADDING,PADDING);
+
+        // Inflate clicked smiley
+        view.setPadding(0,0,0,0);
     }
 
     private class SubmitClickListener implements View.OnClickListener {
@@ -87,6 +112,17 @@ public class InputActivity extends AppCompatActivity {
         entry.setTitle(title.getText().toString());
         entry.setContent(content.getText().toString());
         db.insert(entry);
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        // Save state of padding/clicked or not, upon saving
+        savedInstanceState.putInt("paddingBad", bad.getPaddingBottom());
+        savedInstanceState.putInt("paddingOdd", odd.getPaddingBottom());
+        savedInstanceState.putInt("paddingNeutral", neutral.getPaddingBottom());
+        savedInstanceState.putInt("paddingGreat", great.getPaddingBottom());
+
     }
 
 }
