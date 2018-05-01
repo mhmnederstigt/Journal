@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private class ListItemClickListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.d("hi", "listitemclicklistener");
             // find the entry which was clicked
             Cursor cursor = (Cursor) parent.getItemAtPosition(position);
 
@@ -67,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
             clicked.setId(cursor.getInt(cursor.getColumnIndex("_id")));
             clicked.setTitle(cursor.getString(cursor.getColumnIndex("title")));
             clicked.setContent(cursor.getString(cursor.getColumnIndex("content")));
-            clicked.setTimestamp(cursor.getString(cursor.getColumnIndex("timestamp")));
+            clicked.setMood(cursor.getInt(cursor.getColumnIndex("mood")));
+//            clicked.setTimestamp(cursor.getString(cursor.getColumnIndex("timestamp")));
 
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             intent.putExtra("clicked", clicked);
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
     private class ListItemLongClickListener implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            // delete clicked item from database
             Cursor c = (Cursor) parent.getItemAtPosition(position);
             int idT = c.getInt(c.getColumnIndex("_id"));
             db.delete(idT);
@@ -89,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateData() {
-        //db = EntryDatabase.getInstance(getApplicationContext()); (QUESTION!)
         Cursor c = db.selectAll();
         adapter.swapCursor(c);
     }

@@ -12,7 +12,6 @@ import android.widget.ImageView;
 public class InputActivity extends AppCompatActivity {
     int PADDING = 16;
     int mood;
-    Boolean setMood;
     ImageView bad;
     ImageView odd;
     ImageView neutral;
@@ -95,9 +94,9 @@ public class InputActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             addEntry(view);
-
-            Intent intent = new Intent(InputActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
+//            Intent intent = new Intent(InputActivity.this, MainActivity.class);
+//            startActivity(intent);
         }
     }
 
