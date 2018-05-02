@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             clicked.setTitle(cursor.getString(cursor.getColumnIndex("title")));
             clicked.setContent(cursor.getString(cursor.getColumnIndex("content")));
             clicked.setMood(cursor.getInt(cursor.getColumnIndex("mood")));
-//            clicked.setTimestamp(cursor.getString(cursor.getColumnIndex("timestamp")));
+            clicked.setTimestamp(cursor.getString(cursor.getColumnIndex("ts")));
 
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             intent.putExtra("clicked", clicked);

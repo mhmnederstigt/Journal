@@ -17,7 +17,6 @@ public class InputActivity extends AppCompatActivity {
     ImageView neutral;
     ImageView great;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +44,6 @@ public class InputActivity extends AppCompatActivity {
             neutral.setPadding(paddingNeutral,paddingNeutral, paddingNeutral, paddingNeutral);
             int paddingGreat = savedInstanceState.getInt("paddingGreat");
             great.setPadding(paddingGreat,paddingGreat, paddingGreat, paddingGreat);
-
         }
         else {
             bad.setPadding(PADDING, PADDING, PADDING, PADDING);

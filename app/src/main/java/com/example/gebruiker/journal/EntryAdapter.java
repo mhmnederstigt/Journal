@@ -19,17 +19,17 @@ public class EntryAdapter extends ResourceCursorAdapter {
         // get the title and timestamp from the DB
         String title = bindViewCursor.getString(bindViewCursor.getColumnIndex("title"));
         int mood = bindViewCursor.getInt(bindViewCursor.getColumnIndex("mood"));
-//        String timestamp = bindViewCursor.getString(bindViewCursor.getColumnIndex("timestamp"));
+        String timestamp = bindViewCursor.getString(bindViewCursor.getColumnIndex("ts"));
 
         // get the views in which it has to be displayed
         TextView displayTitle = view.findViewById(R.id.title);
         ImageView displayMood = view.findViewById(R.id.mood);
         TextView displayMoodtext = view.findViewById(R.id.moodtext);
-//        TextView displayTimestamp = view.findViewById(R.id.timestamp);
+        TextView displayTimestamp = view.findViewById(R.id.timestamp);
 
         // set info in display
         displayTitle.setText(title);
-//        displayTimestamp.setText(timestamp);
+        displayTimestamp.setText(timestamp);
 
         // Determine what image to display based on mood info from table
         switch (mood) {
