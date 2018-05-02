@@ -1,16 +1,14 @@
 package com.example.gebruiker.journal;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 public class InputActivity extends AppCompatActivity {
-    int PADDING = 16;
+    final int PADDING = 16;
     int mood;
     ImageView bad;
     ImageView odd;
@@ -22,19 +20,19 @@ public class InputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
-        Button submit = (Button) findViewById(R.id.submit);
+        Button submit = findViewById(R.id.submit);
         submit.setOnClickListener(new SubmitClickListener());
 
-        bad = (ImageView) findViewById(R.id.smileybad);
+        bad = findViewById(R.id.smileybad);
         bad.setOnClickListener(new SmileyClickListener());
-        odd = (ImageView) findViewById(R.id.smileyodd);
+        odd = findViewById(R.id.smileyodd);
         odd.setOnClickListener(new SmileyClickListener());
-        neutral = (ImageView) findViewById(R.id.smileyneutral);
+        neutral = findViewById(R.id.smileyneutral);
         neutral.setOnClickListener(new SmileyClickListener());
-        great = (ImageView) findViewById(R.id.smileygreat);
+        great = findViewById(R.id.smileygreat);
         great.setOnClickListener(new SmileyClickListener());
 
-        // Set padding of smileys as it was previously
+        // set padding of smileys as it was previously
         if (savedInstanceState != null){
             int paddingBad = savedInstanceState.getInt("paddingBad");
             bad.setPadding(paddingBad,paddingBad, paddingBad, paddingBad);
@@ -78,13 +76,13 @@ public class InputActivity extends AppCompatActivity {
     }
 
     private void morph(View view) {
-        // Deflate all smileys, except for the one that is clicked
+        // deflate all smileys, except for the one that is clicked
         bad.setPadding(PADDING,PADDING,PADDING,PADDING);
         odd.setPadding(PADDING,PADDING,PADDING,PADDING);
         neutral.setPadding(PADDING,PADDING,PADDING,PADDING);
         great.setPadding(PADDING,PADDING,PADDING,PADDING);
 
-        // Inflate clicked smiley
+        // inflate clicked smiley
         view.setPadding(0,0,0,0);
     }
 
@@ -93,12 +91,11 @@ public class InputActivity extends AppCompatActivity {
         public void onClick(View view) {
             addEntry(view);
             finish();
-//            Intent intent = new Intent(InputActivity.this, MainActivity.class);
-//            startActivity(intent);
         }
     }
 
     public void addEntry (View view){
+        // create a new entry in database and insert this
         EntryDatabase db = EntryDatabase.getInstance(this);
 
         JournalEntry entry = new JournalEntry();
@@ -114,12 +111,10 @@ public class InputActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        // Save state of padding/clicked or not, upon saving
+        // save state of padding/clicked or not, upon saving
         savedInstanceState.putInt("paddingBad", bad.getPaddingBottom());
         savedInstanceState.putInt("paddingOdd", odd.getPaddingBottom());
         savedInstanceState.putInt("paddingNeutral", neutral.getPaddingBottom());
         savedInstanceState.putInt("paddingGreat", great.getPaddingBottom());
-
     }
-
 }

@@ -2,13 +2,11 @@ package com.example.gebruiker.journal;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ResourceCursorAdapter;
 
-import java.sql.Timestamp;
 
 public class EntryAdapter extends ResourceCursorAdapter {
     public EntryAdapter(Context context, Cursor c) {
@@ -16,7 +14,7 @@ public class EntryAdapter extends ResourceCursorAdapter {
     }
 
     public void bindView(View view, Context context, Cursor bindViewCursor){
-        // get the title and timestamp from the DB
+        // get the title and timestamp from the database
         String title = bindViewCursor.getString(bindViewCursor.getColumnIndex("title"));
         int mood = bindViewCursor.getInt(bindViewCursor.getColumnIndex("mood"));
         String timestamp = bindViewCursor.getString(bindViewCursor.getColumnIndex("ts"));
@@ -31,7 +29,7 @@ public class EntryAdapter extends ResourceCursorAdapter {
         displayTitle.setText(title);
         displayTimestamp.setText(timestamp);
 
-        // Determine what image to display based on mood info from table
+        // determine what image to display based on mood info from table
         switch (mood) {
             case 1:
                 displayMood.setImageResource(R.drawable.smileybad);

@@ -5,16 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import java.util.Locale;
 
 public class EntryDatabase extends SQLiteOpenHelper {
     private static EntryDatabase instance;
     private static final String dbName = "journalEntries";
     private static final int dbVersion = 5;
 
-    // If database exists, use that one, otherwise create new
+    // if database exists, use that one, otherwise create new
     public static EntryDatabase getInstance(Context context) {
         if (instance == null) {
            instance = new EntryDatabase(context, dbName, null, dbVersion);
@@ -22,7 +19,7 @@ public class EntryDatabase extends SQLiteOpenHelper {
         return instance;
     }
 
-    // Constructor of EntryDatabase
+    // constructor of EntryDatabase
     private EntryDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, dbName, factory, dbVersion);
     }
@@ -39,7 +36,7 @@ public class EntryDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Method to select database
+    //method to select database
     public Cursor selectAll(){
         // select all rows in table
         return this.getWritableDatabase().rawQuery("SELECT * FROM diary", null, null);
@@ -48,10 +45,10 @@ public class EntryDatabase extends SQLiteOpenHelper {
     public void insert(JournalEntry entry) {
         SQLiteDatabase wdb = getWritableDatabase();
 
-        // A shortcut functionality from SQLiteOpenHelper to insert into database without the use of an SQL statement (QUESTION!)
+        // a shortcut functionality from SQLiteOpenHelper to insert into database without the use of an SQL statement
         ContentValues cv = new ContentValues();
 
-        // Insert data (as received by UI and saved in entry) into table
+        // insert data (as received by UI and saved in entry) into table
         cv.put("title", entry.getTitle());
         cv.put("content", entry.getContent());
         cv.put("mood", entry.getMood());
